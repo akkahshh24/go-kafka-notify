@@ -10,6 +10,7 @@ import (
 )
 
 var ErrUserNotFoundInProducer = errors.New("user not found")
+var ErrNoMessagesFound = errors.New("no messages found")
 
 func GetIDFromRequest(ctx *gin.Context, formValue string) (int, error) {
 	id, err := strconv.Atoi(ctx.PostForm(formValue))
@@ -28,4 +29,13 @@ func FindUserByID(id int, users []models.User) (*models.User, error) {
 	}
 
 	return nil, ErrUserNotFoundInProducer
+}
+
+func GetUserIDFromRequest(ctx *gin.Context) (string, error) {
+	userID := ctx.Param("userID")
+	if userID == "" {
+		return "", ErrNoMessagesFound
+	}
+
+	return userID, nil
 }

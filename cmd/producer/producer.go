@@ -17,6 +17,7 @@ import (
 const (
 	KafkaServerAddress = "localhost:9092"
 	KafkaTopic         = "notifications"
+	ProducerPort       = ":8080"
 )
 
 func sendKafkaMessage(ctx *gin.Context, producer sarama.SyncProducer, users []models.User, fromID, toID int) error {
@@ -115,4 +116,9 @@ func main() {
 	router := gin.Default()
 	router.POST("/send", sendMessageHandler(producer, users))
 
+	log.Printf("Kafka Producer started at http://localhost%s\n", ProducerPort)
+
+	if err := router.Run(ProducerPort); err != nil {
+		log.Printf("failed to run the server: %v", err)
+	}
 }
