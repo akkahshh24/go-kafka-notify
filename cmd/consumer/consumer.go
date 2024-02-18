@@ -16,7 +16,7 @@ const (
 	KafkaServerAddress = "localhost:9092"
 	ConsumerGroup      = "notifications-group"
 	ConsumerTopic      = "notifications"
-	ConsumerPort       = ":8081"
+	ConsumerPort       = ":8082"
 )
 
 func handleNotifications(ctx *gin.Context, store *models.NotificationStore) {
